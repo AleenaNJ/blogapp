@@ -11,6 +11,7 @@ hashPasswordGenerator=async(pass)=>{
 
 
 router.post("/add",async(req,res)=>{
+
     let {data}={"data":req.body}
     let password=data.password
 hashPasswordGenerator(password).then(
@@ -30,5 +31,38 @@ console.log(data)
 })
 })
 
+router.post("/signin",async(req,res)=>{
+    let input=req.body
+    let email=req.body.email
+    let data=await usermodel.findOne({"email":email})
+    if(!data)
+    {
+         res.json(
+            {
+                status:"invalid user"
+            }
+         )
+    }
 
+    console.log(data)
+    let dbPassword=data.password
+    let inputpassword=req.body.password
+    console.log(dbPassword)
+    console.log(inputpassword)
+    const match=await bcrypt.compare(inputpassword,dbPassword)
+    if(!match)
+    {
+        return res.json(
+            {
+                status:"invalid password"
+            }
+        )
+    }
+
+res.json({
+    status:"success"
+})
+
+
+})
 module.exports=router
