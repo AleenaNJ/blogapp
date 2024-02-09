@@ -1,0 +1,5 @@
+const express=require("express")
+const postmodel=require("../model/postmodel")
+
+
+ro
