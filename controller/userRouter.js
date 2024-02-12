@@ -30,6 +30,12 @@ console.log(data)
     })
 })
 })
+      
+
+router.get("/view",async(req,res)=>{
+    let data=await usermodel.find()
+    res.json(data)
+})
 
 router.post("/signin",async(req,res)=>{
     let input=req.body
